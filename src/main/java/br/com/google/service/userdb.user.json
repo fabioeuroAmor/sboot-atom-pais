@@ -1,0 +1,18 @@
+[{
+  "_id": {
+    "$oid": "649362534749c42c11d06217"
+  },
+  "firstName": "MARIA",
+  "lastName": "MONTEIRO AMORIM",
+  "emailId": "paz@gmail.com",
+  "_class": "com.knf.dev.demo.crudapplication.model.User"
+},
+{
+  "_id": {
+    "$oid": "649363bfccad99252921fc7e"
+  },
+  "firstName": "FABIO",
+  "lastName": "MONTEIRO AMORIM",
+  "emailId": "fabioeuro@gmail.com",
+  "_class": "com.knf.dev.demo.crudapplication.model.User"
+}]
