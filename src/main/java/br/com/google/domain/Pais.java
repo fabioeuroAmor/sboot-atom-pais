@@ -1,10 +1,9 @@
 package br.com.google.domain;
 
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import jakarta.persistence.Entity;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,15 +16,20 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-@SequenceGenerator(name="tbl_pais_id_pais_seq", sequenceName="tbl_pais_id_pais_seq",initialValue=1, allocationSize=1)
+@SequenceGenerator(name="pai_id_pais_seq", sequenceName="pais_id_pais_seq",initialValue=1, allocationSize=1)
 public class Pais {
-
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "pai_id_pais_seq")
+    @Column(name="id_pais")
     private Integer idPais;
 
-    private String nome;
-
+    @Column(name="codigo")
     private String codigo;
 
+    @Column(name="continente")
     private String continente;
+
+    @Column(name="nome")
+    private String nome;
+
 }
