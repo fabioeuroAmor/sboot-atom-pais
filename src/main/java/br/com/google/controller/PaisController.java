@@ -19,7 +19,7 @@ public class PaisController {
     private PaisService paisService;
 
     @PostMapping()
-    public  ResponseEntity<Response> inserirPais(@RequestParam(value = "nome", required = true) String nome, @RequestParam(value = "codigo", required = true) String codigo,@RequestParam(value = "continente", required = true) String continente ){
+    public ResponseEntity<Response> inserirPais(@RequestParam(value = "nome", required = true) String nome, @RequestParam(value = "codigo", required = true) String codigo, @RequestParam(value = "continente", required = true) String continente) {
         Response response = new Response();
         PaisDto paisDto = null;
 
@@ -34,21 +34,21 @@ public class PaisController {
 
             response.setMensagensRetorno("Insercao do pais foi realizada com sucesso!");
 
-         }catch (Exception e){
+        } catch (Exception e) {
             log.error("Erro ao inserir o pais: " + e.getMessage());
             response.setMensagensRetorno(e.getMessage());
-            return  (ResponseEntity<Response>) ResponseEntity.status(500);
-         }
+            return (ResponseEntity<Response>) ResponseEntity.status(500);
+        }
 
-        return  ResponseEntity.ok(response);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/body")
-    public  ResponseEntity<Response> inserirPais(@RequestBody PaisDto paisDto){
+    public ResponseEntity<Response> inserirPais(@RequestBody PaisDto paisDto) {
         Response response = new Response();
         PaisDto paisServDto = null;
 
-        try{
+        try {
             paisServDto = new PaisDto();
             paisServDto.setNome(paisDto.getNome());
             paisServDto.setCodigo(paisDto.getCodigo());
@@ -60,21 +60,21 @@ public class PaisController {
             //paisService.
             //response.setModeloRetorno(paisService.inserirPais(paisDto));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("Erro ao inserir o pais: " + e.getMessage());
             response.setMensagensRetorno(e.getMessage());
-            return  (ResponseEntity<Response>) ResponseEntity.status(500);
+            return (ResponseEntity<Response>) ResponseEntity.status(500);
         }
-        return  ResponseEntity.ok(response);
+        return ResponseEntity.ok(response);
     }
 
 
     @GetMapping
-    public ResponseEntity<Response> consulta(@RequestParam (value = "idPais", required = false) Integer idPais, @RequestParam (value = "nome", required = false) String nome, @RequestParam (value = "codigo", required = false) String codigo,@RequestParam (value = "continente", required = false) String continente) {
+    public ResponseEntity<Response> consulta(@RequestParam(value = "idPais", required = false) Integer idPais, @RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "codigo", required = false) String codigo, @RequestParam(value = "continente", required = false) String continente) {
         Response response = new Response();
         PaisDto paisServDto = null;
 
-        try{
+        try {
 
             paisServDto = new PaisDto();
             paisServDto.setIdPais(idPais);
@@ -90,7 +90,7 @@ public class PaisController {
             //response.setModeloRetorno(paisService.inserirPais(paisDto));
 
 
-        }  catch (Exception e) {
+        } catch (Exception e) {
             //Log().error("Erro ao inserir o país: {}", e.getMessage());
             response.setMensagensRetorno(e.getMessage());
             return (ResponseEntity<Response>) ResponseEntity.status(500);
@@ -112,7 +112,6 @@ public class PaisController {
             paisServDto.setCodigo(codigo);
 
 
-
             response.setModeloRetorno(paisServDto);
             response.setMensagensRetorno("País deletado com sucesso.");
 
@@ -128,4 +127,4 @@ public class PaisController {
 
 
 
-}
+
