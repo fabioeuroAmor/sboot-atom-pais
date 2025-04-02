@@ -15,12 +15,9 @@ public class PaisDto {
 
     private Integer idPais;
 
-
     private String codigo;
 
-
     private String continente;
-
 
     private String nome;
 
