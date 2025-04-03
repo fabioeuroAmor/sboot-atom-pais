@@ -29,9 +29,7 @@ public class PaisController {
             paisDto.setCodigo(codigo);
             paisDto.setContinente(continente);
 
-            //paisService.
-            //response.setModeloRetorno(paisService.inserirPais(paisDto));
-
+            response.setModeloRetorno(paisService.inserirPais(paisDto));
             response.setMensagensRetorno("Insercao do pais foi realizada com sucesso!");
 
         } catch (Exception e) {
@@ -121,6 +119,48 @@ public class PaisController {
         }
 
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/delete/{idPais}")
+    public ResponseEntity<Response> deletePath(@PathVariable("idPais") Integer idPais){
+        Response response = new Response();
+       try{
+           PaisDto paisServDto = new PaisDto();
+           paisServDto.setIdPais(idPais);
+
+       }catch (Exception e) {
+           response.setMensagensRetorno("Erro ao deletar o país: " + e.getMessage());
+           return ResponseEntity.status(500).body(response);
+       }
+
+        return  ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/delete/{idPais}")
+    public ResponseEntity<Response> deletePut(@PathVariable("idPais") Integer idPais){
+        Response response = new Response();
+        try{
+            PaisDto paisServDto = new PaisDto();
+            paisServDto.setIdPais(idPais);
+
+        }catch (Exception e) {
+            response.setMensagensRetorno("Erro ao deletar o país: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
+        }
+
+        return  ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/todos")
+    public ResponseEntity<Response> buscarTodosPaises(){
+        Response response = new Response();
+        try {
+
+        }catch (Exception e) {
+            response.setMensagensRetorno("Erro ao deletar o país: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
+        }
+        return   ResponseEntity.ok(response);
     }
 }
 
