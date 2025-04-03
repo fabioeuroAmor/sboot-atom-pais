@@ -52,11 +52,8 @@ public class PaisController {
             paisServDto.setCodigo(paisDto.getCodigo());
             paisServDto.setContinente(paisDto.getContinente());
 
-            response.setModeloRetorno(paisServDto);
+            response.setModeloRetorno(paisService.inserirPais(paisDto));
             response.setMensagensRetorno("Insercao do pais foi realizada com sucesso!");
-
-            //paisService.
-            //response.setModeloRetorno(paisService.inserirPais(paisDto));
 
         } catch (Exception e) {
             log.error("Erro ao inserir o pais: " + e.getMessage());
