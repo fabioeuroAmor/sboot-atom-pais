@@ -113,8 +113,8 @@ public class PaisController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/delete/{idPais}")
-    public ResponseEntity<Response> deletePath(@PathVariable("idPais") Integer idPais){
+    @PatchMapping("/atualizar/partes/{idPais}")
+    public ResponseEntity<Response> deletePath(@PathVariable("idPais") Integer idPais,  @RequestBody  PaisDto paisDto){
         Response response = new Response();
        try{
            PaisDto paisServDto = new PaisDto();
@@ -128,8 +128,8 @@ public class PaisController {
         return  ResponseEntity.ok(response);
     }
 
-    @PutMapping("/delete/{idPais}")
-    public ResponseEntity<Response> deletePut(@PathVariable("idPais") Integer idPais){
+    @PutMapping("/atualizar/completamente/{idPais}")
+    public ResponseEntity<Response> deletePut(@PathVariable("idPais") Integer idPais, @RequestBody  PaisDto paisDto){
         Response response = new Response();
         try{
             PaisDto paisServDto = new PaisDto();
