@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -78,10 +80,10 @@ public class PaisController {
             paisServDto.setContinente(continente);
 
             response.setModeloRetorno(paisService.consulta(paisServDto));
-            response.setMensagensRetorno("Insercao do país realizado com suceeso");
+            response.setMensagensRetorno("Consulta realizada com suceeso");
 
         } catch (Exception e) {
-            //Log().error("Erro ao inserir o país: {}", e.getMessage());
+            log.error("Erro ao inserir o pais: " + e.getMessage());
             response.setMensagensRetorno(e.getMessage());
             return (ResponseEntity<Response>) ResponseEntity.status(500);
         }
@@ -114,7 +116,7 @@ public class PaisController {
     }
 
     @PatchMapping("/atualizar/partes/{idPais}")
-    public ResponseEntity<Response> deletePath(@PathVariable("idPais") Integer idPais,  @RequestBody  PaisDto paisDto){
+    public ResponseEntity<Response> atualizaPorPartes(@PathVariable("idPais") Integer idPais, @RequestBody  PaisDto paisDto){
         Response response = new Response();
        try{
            PaisDto paisServDto = new PaisDto();
@@ -129,7 +131,7 @@ public class PaisController {
     }
 
     @PutMapping("/atualizar/completamente/{idPais}")
-    public ResponseEntity<Response> deletePut(@PathVariable("idPais") Integer idPais, @RequestBody  PaisDto paisDto){
+    public ResponseEntity<Response> AtualizaPorCompleto(@PathVariable("idPais") Integer idPais, @Valid @RequestBody  PaisDto paisDto){
         Response response = new Response();
         try{
             PaisDto paisServDto = new PaisDto();
