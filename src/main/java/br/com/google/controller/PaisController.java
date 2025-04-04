@@ -77,13 +77,8 @@ public class PaisController {
             paisServDto.setCodigo(codigo);
             paisServDto.setContinente(continente);
 
-
-            response.setModeloRetorno(paisServDto);
+            response.setModeloRetorno(paisService.consulta(paisServDto));
             response.setMensagensRetorno("Insercao do país realizado com suceeso");
-
-            //paisSevice.
-            //response.setModeloRetorno(paisService.inserirPais(paisDto));
-
 
         } catch (Exception e) {
             //Log().error("Erro ao inserir o país: {}", e.getMessage());
@@ -107,8 +102,8 @@ public class PaisController {
             paisServDto.setCodigo(codigo);
 
 
-            response.setModeloRetorno(paisServDto);
-            response.setMensagensRetorno("País deletado com sucesso.");
+            response.setModeloRetorno(null);
+            response.setMensagensRetorno(paisService.delete(paisServDto));
 
         } catch (Exception e) {
             response.setMensagensRetorno("Erro ao deletar o país: " + e.getMessage());
