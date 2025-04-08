@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: sboot-atom-pais
+
+  datasource:
+    url: jdbc:postgresql://localhostDev:5432/basic
+    username: postgresDev
+    password: postgresDev
