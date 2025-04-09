@@ -119,8 +119,10 @@ public class PaisController {
     public ResponseEntity<Response> atualizaPorPartes(@PathVariable("idPais") Integer idPais, @RequestBody  PaisDto paisDto){
         Response response = new Response();
        try{
-           PaisDto paisServDto = new PaisDto();
-           paisServDto.setIdPais(idPais);
+
+           response.setModeloRetorno(paisService.atualizaPorPartes(idPais, paisDto));
+           response.setMensagensRetorno("Parte do objeto foi atualizada com sucesso!");
+
 
        }catch (Exception e) {
            response.setMensagensRetorno("Erro ao deletar o país: " + e.getMessage());

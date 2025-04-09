@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -98,5 +99,51 @@ public class PaisService {
         }
 
         return  retorno;
+    }
+
+    public PaisDto atualizaPorPartes(Integer idPais, PaisDto paisDto) throws BDException{
+        Pais pais = new Pais();
+        PaisDto paisNewDto = null;
+
+     try{
+         ModelMapper modelMapper = new ModelMapper();
+         paisNewDto =  new PaisDto();
+         paisNewDto.setIdPais(idPais);
+
+         Optional<Pais> paisDomain = paisRepository.findById(idPais);
+
+         if(!paisDomain.isEmpty()){
+             Pais paisBanco = paisDomain.get();
+             if(paisDto.getCodigo() !=null && !paisDto.getCodigo().isEmpty()){
+                 paisNewDto.setCodigo(paisDto.getCodigo());
+                 paisNewDto.setNome(paisBanco.getNome());
+                 paisNewDto.setContinente(paisBanco.getContinente());
+             }
+
+             if(paisDto.getNome() !=null && !paisDto.getNome().isEmpty()){
+                 paisNewDto.setNome(paisDto.getNome());
+                 paisNewDto.setContinente(paisBanco.getContinente());
+                 paisNewDto.setCodigo(paisBanco.getCodigo());
+             }
+
+             if(paisDto.getContinente() !=null && !paisDto.getContinente().isEmpty()){
+                 paisNewDto.setContinente(paisDto.getContinente());
+                 paisNewDto.setNome(paisBanco.getNome());
+                 paisNewDto.setCodigo(paisBanco.getCodigo());
+             }
+         }
+
+         pais = modelMapper.map(paisNewDto, Pais.class);
+
+         pais = paisRepository.saveAndFlush(pais);
+
+         paisNewDto = modelMapper.map(pais, PaisDto.class);
+
+     }catch(Exception e){
+         log.error("Erro na camada de servico ao realizar a atualização por parte do objeto: " + e.getMessage());
+         throw new BDException(e.getMessage());
+     }
+
+        return paisNewDto;
     }
 }
