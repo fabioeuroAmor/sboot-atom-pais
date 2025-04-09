@@ -133,11 +133,11 @@ public class PaisController {
     }
 
     @PutMapping("/atualizar/completamente/{idPais}")
-    public ResponseEntity<Response> AtualizaPorCompleto(@PathVariable("idPais") Integer idPais, @Valid @RequestBody  PaisDto paisDto){
+    public ResponseEntity<Response> atualizaPorCompleto(@PathVariable("idPais") Integer idPais, @Valid @RequestBody  PaisDto paisDto){
         Response response = new Response();
         try{
-            PaisDto paisServDto = new PaisDto();
-            paisServDto.setIdPais(idPais);
+            response.setModeloRetorno(paisService.atualizaPorCompleto(idPais,paisDto));
+            response.setMensagensRetorno("Foi atualizado as informações de todos atributos do objeto pais!");
 
         }catch (Exception e) {
             response.setMensagensRetorno("Erro ao deletar o país: " + e.getMessage());
@@ -151,7 +151,8 @@ public class PaisController {
     public ResponseEntity<Response> buscarTodosPaises(){
         Response response = new Response();
         try {
-
+            response.setModeloRetorno(paisService.buscarTodosPaises());
+            response.setMensagensRetorno("Aqui esta a lista de pais, cadastrado no banco de dados!");
         }catch (Exception e) {
             response.setMensagensRetorno("Erro ao deletar o país: " + e.getMessage());
             return ResponseEntity.status(500).body(response);

@@ -146,4 +146,51 @@ public class PaisService {
 
         return paisNewDto;
     }
+
+    public PaisDto atualizaPorCompleto(Integer idPais, PaisDto paisDto) throws BDException{
+        Pais pais = new Pais();
+        PaisDto paisNewDto = null;
+        ModelMapper modelMapper = new ModelMapper();
+        try{
+            Optional<Pais> paisDomain = paisRepository.findById(idPais);
+            if(!paisDomain.isEmpty()){
+
+                Pais paisBanco = paisDomain.get();
+                paisBanco.setCodigo(paisDto.getCodigo());
+                paisBanco.setContinente(paisDto.getContinente());
+                paisBanco.setNome(paisDto.getNome());
+
+                pais = paisRepository.saveAndFlush(paisBanco);
+                paisNewDto =  new PaisDto();
+                paisNewDto = modelMapper.map(pais, PaisDto.class);
+            }
+        }catch(Exception e){
+            log.error("Erro na camada de servico ao realizar a atualização por completo do objeto: " + e.getMessage());
+            throw new BDException(e.getMessage());
+        }
+
+        return paisNewDto;
+    }
+
+    public List<PaisDto> buscarTodosPaises() throws BDException{
+        ArrayList<Pais> arrayPais = new ArrayList<>();
+        ArrayList<PaisDto> arrayPaisDto = new ArrayList<>();
+        try{
+
+            arrayPais = (ArrayList<Pais>) paisRepository.findAll();
+
+            ModelMapper modelMapper = new ModelMapper();
+            // Defina o tipo de destino usando TypeToken
+            Type destinationListType = new TypeToken<List<PaisDto>>() {}.getType();
+
+            arrayPaisDto  = modelMapper.map(arrayPais, destinationListType);
+
+
+        }catch(Exception e){
+            log.error("Erro na camada de servico ao buscar todos os paises da base de dados: " + e.getMessage());
+            throw new BDException(e.getMessage());
+        }
+
+        return  arrayPaisDto;
+    }
 }
