@@ -10,8 +10,38 @@ spring:
     username: postgres
     password: postgres
 
-
-
 server:
   port: 8081
 
+################################### KAFKA ####################################
+kafka:
+  consumer:
+    bootstrap-servers: 127.0.0.1:9092
+    group-id: group_id
+    auto-offset-reset: earliest
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+################################ MAPEAMENTO DE TOPICOS CRIADOS ####################
+mapeamento:
+  topicos:
+    topic1:
+      name:
+        consumer: meu-topico-1
+    topic2:
+      name:
+        consumer: meu-topico-2
+
+  producer:
+    bootstrap-servers: 127.0.0.1:9092
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    group-id: group_id
+    topic1:
+      name:
+        producer: meu-topico-produce-1
+
+# Common Kafka Properties
+# auto:
+#   create:
+#     topics:
+#       enable: true
