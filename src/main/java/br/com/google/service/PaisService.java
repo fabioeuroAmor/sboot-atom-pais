@@ -2,9 +2,12 @@ package br.com.google.service;
 
 
 import br.com.google.domain.Pais;
+import br.com.google.dto.ErroDto;
 import br.com.google.dto.PaisDto;
 import br.com.google.exception.BDException;
+import br.com.google.produce.PaisKafkaProduce;
 import br.com.google.repository.PaisRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -18,20 +21,34 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class PaisService {
 
     @Autowired
     private PaisRepository   paisRepository;
+    private final PaisKafkaProduce paisKafkaProduce;
+
     public PaisDto inserirPais(PaisDto paisDto) throws BDException{
         PaisDto paisPers = null;
         try {
             ModelMapper modelMapper = new ModelMapper();
+
+            if(paisDto.getIdPais().intValue() == 0){
+                paisDto.setIdPais(null);
+            }
+
             Pais pais = modelMapper.map(paisDto, Pais.class);
 
             paisPers = modelMapper.map( paisRepository.save(pais), PaisDto.class);
 
         }catch(Exception e){
+            //Produz o evento de erro em meu-topico-produce-1
+            ErroDto erroDto = new ErroDto();
+            erroDto.setCodigo(paisDto.getCodigo());
+            erroDto.setMenssagem(e.getMessage());
+            paisKafkaProduce.send(erroDto.toString());
+
             log.error("Erro na camada de servico ao realizar a insercao no banco de dados: " + e.getMessage());
             throw new BDException(e.getMessage());
         }
