@@ -25,8 +25,10 @@ import java.util.Optional;
 @Service
 public class PaisService {
 
-    @Autowired
-    private PaisRepository   paisRepository;
+//    @Autowired
+//    private PaisRepository   paisRepository;
+
+    private final PaisRepository   paisRepository;
     private final PaisKafkaProduce paisKafkaProduce;
 
     public PaisDto inserirPais(PaisDto paisDto) throws BDException{
@@ -38,9 +40,13 @@ public class PaisService {
                 paisDto.setIdPais(null);
             }
 
+
+
+
             Pais pais = modelMapper.map(paisDto, Pais.class);
 
             paisPers = modelMapper.map( paisRepository.save(pais), PaisDto.class);
+
 
         }catch(Exception e){
             //Produz o evento de erro em meu-topico-produce-1
