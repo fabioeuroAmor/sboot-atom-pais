@@ -103,6 +103,13 @@
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>${jacoco.version}</version>
 		</dependency>
+        <!--Verifica vunerabilidade -->
+		<dependency>
+			<groupId>org.owasp</groupId>
+			<artifactId>dependency-check-maven</artifactId>
+			<version>12.1.1</version>
+			<type>maven-plugin</type>
+		</dependency>
 
 	</dependencies>
 
@@ -157,6 +164,19 @@
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+            <!-- Gera relatorio de Vunerabilidade -->
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>12.1.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
 						</goals>
 					</execution>
 				</executions>
