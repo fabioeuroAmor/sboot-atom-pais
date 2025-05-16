@@ -12,8 +12,7 @@ permissions:
   contents: write
   security-events: write
   issues: write
-  pull-requests: write
-  status: write
+  pull-requests: write  
   checks: write
 
 on:
