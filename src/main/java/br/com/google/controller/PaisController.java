@@ -20,6 +20,25 @@ public class PaisController {
     @Autowired
     private PaisService paisService;
 
+
+    @GetMapping(value = "/buscarPaisNome")
+    public ResponseEntity<Response> buscarPaisNome(@RequestParam(value = "nome", required = true) String nome){
+        Response response = new Response();
+
+        try {
+            response.setModeloRetorno(paisService.buscarPaisNome(nome));
+            response.setMensagensRetorno("Pais encontrado na base de dados!");
+            ;
+        }catch (Exception e) {
+            log.error("Erro ao inserir o pais: " + e.getMessage());
+            response.setMensagensRetorno(e.getMessage());
+            return (ResponseEntity<Response>) ResponseEntity.status(500);
+        }
+
+        return ResponseEntity.ok(response);
+
+    }
+
     @PostMapping()
     public ResponseEntity<Response> inserirPais(@RequestParam(value = "nome", required = true) String nome, @RequestParam(value = "codigo", required = true) String codigo, @RequestParam(value = "continente", required = true) String continente) {
         Response response = new Response();

@@ -216,4 +216,19 @@ public class PaisService {
 
         return  arrayPaisDto;
     }
+
+    public PaisDto buscarPaisNome(String nome){
+        PaisDto paisRetornoDto = new PaisDto();
+        try {
+            Pais pais = paisRepository.buscarPaisNomeQueryNativa(nome);
+            ModelMapper modelMapper = new ModelMapper();
+            paisRetornoDto = modelMapper.map(pais, PaisDto.class);
+        }catch(Exception e){
+            log.error("Erro na camada de servico ao buscar todos os paises da base de dados: " + e.getMessage());
+            throw new BDException(e.getMessage());
+        }
+
+        return paisRetornoDto;
+
+    }
 }
